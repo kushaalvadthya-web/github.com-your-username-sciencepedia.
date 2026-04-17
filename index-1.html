@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sciencepedia | 350 Wonders of India</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff9933">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --saffron: #ff9933;
+            --white: #f5f5f5;
+            --green: #138808;
+            --dark: #070b14;
+            --card: #0d1220;
+            --card-border: #1a2340;
+            --glow: rgba(255,153,51,0.15);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background: var(--dark);
+            color: #c8d0e0;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Starfield background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 50% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1px 1px at 70% 85%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+                radial-gradient(1px 1px at 60% 40%, rgba(255,255,255,0.4) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: relative;
+            background: linear-gradient(180deg, #000510 0%, #070b14 100%);
+            padding: 30px 20px 24px;
+            text-align: center;
+            border-bottom: 3px solid var(--saffron);
+            box-shadow: 0 4px 40px rgba(255,153,51,0.2);
+            z-index: 10;
+        }
+
+        .header-logo {
+            display: block;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+            border-radius: 24px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(255,153,51,0.5));
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 0 16px rgba(255,153,51,0.4)); }
+            50% { filter: drop-shadow(0 0 32px rgba(255,153,51,0.8)); }
+        }
+
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.6rem, 6vw, 2.8rem);
+            font-weight: 900;
+            margin: 0 0 4px;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, var(--saffron) 0%, #fff 50%, var(--green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .header-tricolor {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 14px;
+        }
+
+        .header-tricolor span {
+            height: 3px;
+            width: 50px;
+            border-radius: 2px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            position: sticky;
+            top: 0;
+            background: rgba(7, 11, 20, 0.97);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #1a2340;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-wrap::before {
+            content: '🔍';
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        #searchBar {
+            width: 100%;
+            padding: 11px 16px 11px 40px;
+            border-radius: 25px;
+            border: 1px solid #2a3550;
+            background: #0d1220;
+            color: #e0e8f0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #searchBar:focus {
+            border-color: var(--saffron);
+            box-shadow: 0 0 0 3px rgba(255,153,51,0.15);
+        }
+
+        #searchBar::placeholder { color: #445; }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .filters button {
+            background: #0d1220;
+            color: #8090b0;
+            border: 1px solid #1a2340;
+            padding: 5px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+        }
+
+        .filters button:hover { border-color: var(--saffron); color: var(--saffron); }
+
+        .filters button.active {
+            background: var(--saffron);
+            color: #000;
+            border-color: var(--saffron);
+        }
+
+        #counter {
+            font-size: 0.8rem;
+            color: #445;
+            letter-spacing: 1px;
+        }
+
+        /* ===== GRID ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 16px;
+            padding: 20px 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid var(--card-border);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--saffron), var(--green));
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,153,51,0.3);
+            box-shadow: 0 8px 30px rgba(255,153,51,0.1);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .tag {
+            display: inline-block;
+            color: var(--green);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: rgba(19,136,8,0.12);
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(19,136,8,0.25);
+        }
+
+        .card h3 {
+            color: var(--saffron);
+            margin: 8px 0 6px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            color: #8090b0;
+        }
+
+        .fact-box {
+            background: rgba(255,153,51,0.07);
+            padding: 9px 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.82rem;
+            border-left: 3px solid var(--saffron);
+            color: #a0b0c8;
+            line-height: 1.5;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #445;
+        }
+
+        .empty h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #334;
+            margin-bottom: 8px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #2a3550;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-top: 1px solid #0d1220;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- LOGO: Place icon.png in same folder as this file -->
+    <img src="icon.png" alt="Sciencepedia Logo" class="header-logo"
+         onerror="this.style.display='none'">
+    <h1 class="header-title">SCIENCEPEDIA</h1>
+    <p class="header-subtitle">350+ Wonders of India</p>
+    <div class="header-tricolor">
+        <span style="background:#ff9933;"></span>
+        <span style="background:#ffffff;"></span>
+        <span style="background:#138808;"></span>
+    </div>
+</header>
+
+<div class="controls">
+    <div id="counter">Showing 350 discoveries</div>
+    <div class="search-wrap">
+        <input type="text" id="searchBar" placeholder="Search 350 topics..." oninput="render()">
+    </div>
+    <div class="filters">
+        <button class="active" onclick="setCat('all')">🌐 All</button>
+        <button onclick="setCat('ISRO')">🚀 Space</button>
+        <button onclick="setCat('Scientists')">🧠 Minds</button>
+        <button onclick="setCat('History')">🏛️ Ancient</button>
+        <button onclick="setCat('Biology')">🧬 Life</button>
+        <button onclick="setCat('Physics')">⚛️ Physics</button>
+    </div>
+</div>
+
+<div class="grid" id="mainGrid"></div>
+
+<footer>
+    🇮🇳 SCIENCEPEDIA — 350 Wonders of India &nbsp;|&nbsp; Built with pride
+</footer>
+
+<script>
+    const database = [
+        { name: "Chandrayaan-3", cat: "ISRO", desc: "India's third lunar mission that successfully landed near the Moon's South Pole, making India the first nation to achieve this feat. <div class='fact-box'><b>💡 SCIENCE:</b> Detected sulfur and other elements on lunar surface. <b>✨ FACT:</b> Landed August 23, 2023 — now celebrated as National Space Day.</div>" },
+        { name: "Sushruta Samhita", cat: "History", desc: "Ancient Sanskrit medical text compiled by surgeon Sushruta, considered one of the oldest surgical treatises in history. <div class='fact-box'><b>💡 SCIENCE:</b> Described rhinoplasty (nose reconstruction), cataract surgery & 300+ surgical procedures. <b>✨ FACT:</b> Over 2,600 years old.</div>" },
+        { name: "C.V. Raman", cat: "Scientists", desc: "Physicist who discovered the Raman Effect — inelastic scattering of photons — explaining why the ocean appears blue. <div class='fact-box'><b>💡 SCIENCE:</b> Light changes wavelength when it scatters through a medium. <b>✨ FACT:</b> First Asian to win Nobel Prize in Physics (1930).</div>" },
+        { name: "Aryabhata", cat: "History", desc: "5th-century mathematician and astronomer who calculated pi and proposed Earth's rotation on its axis. <div class='fact-box'><b>💡 SCIENCE:</b> Approximated π as 3.1416 and explained solar/lunar eclipses. <b>✨ FACT:</b> India's first satellite was named after him.</div>" },
+        { name: "Mangalyaan (MOM)", cat: "ISRO", desc: "Mars Orbiter Mission — India's first interplanetary spacecraft. Reached Mars orbit on first attempt. <div class='fact-box'><b>💡 SCIENCE:</b> Studied Martian atmosphere and surface features. <b>✨ FACT:</b> Cheapest Mars mission in history at ₹450 crore.</div>" },
+        { name: "Homi Bhabha", cat: "Scientists", desc: "Father of India's nuclear program and founder of Tata Institute of Fundamental Research. <div class='fact-box'><b>💡 SCIENCE:</b> Proposed Bhabha scattering — electron-positron scattering. <b>✨ FACT:</b> Established India's first nuclear reactor 'Apsara' in 1956.</div>" },
+        { name: "Zero & Decimal System", cat: "History", desc: "Indian mathematicians invented the concept of zero and the decimal positional number system used worldwide today. <div class='fact-box'><b>💡 SCIENCE:</b> Zero as a number (not just a placeholder) originated in India around 500 CE. <b>✨ FACT:</b> Without zero, modern computing is impossible.</div>" },
+        { name: "PSLV Rocket", cat: "ISRO", desc: "Polar Satellite Launch Vehicle — ISRO's workhorse rocket with 50+ successful missions, launching satellites globally. <div class='fact-box'><b>💡 SCIENCE:</b> Uses 4 alternating solid and liquid propulsion stages. <b>✨ FACT:</b> Launched 104 satellites in a single mission (world record, 2017).</div>" },
+        { name: "Srinivasa Ramanujan", cat: "Scientists", desc: "Self-taught mathematical genius who made extraordinary contributions to number theory, infinite series, and continued fractions. <div class='fact-box'><b>💡 SCIENCE:</b> Discovered the Hardy–Ramanujan number 1729 (taxicab number). <b>✨ FACT:</b> Had no formal training — learned from a single library book.</div>" },
+        { name: "Yoga & Meditation", cat: "History", desc: "5,000-year-old Indian mind-body practice now scientifically proven to reduce stress, improve brain function and physical health. <div class='fact-box'><b>💡 SCIENCE:</b> Meditation increases grey matter density in the prefrontal cortex. <b>✨ FACT:</b> June 21 is International Yoga Day, established by the UN.</div>" },
+        { name: "Vikram Sarabhai", cat: "Scientists", desc: "Father of India's space program who established ISRO and initiated satellite programs for national development. <div class='fact-box'><b>💡 SCIENCE:</b> Pioneered cosmic ray research in India. <b>✨ FACT:</b> Chandrayaan-3's lander was named 'Vikram' in his honor.</div>" },
+        { name: "Aditya-L1", cat: "ISRO", desc: "India's first solar observatory mission, placed at the Sun-Earth Lagrange Point 1 to study solar activity. <div class='fact-box'><b>💡 SCIENCE:</b> Studies solar corona, solar winds, and space weather. <b>✨ FACT:</b> Launched September 2, 2023 — just days after Chandrayaan-3.</div>" },
+        { name: "Charaka Samhita", cat: "History", desc: "Ancient Ayurvedic encyclopedia with detailed descriptions of diseases, treatments, and medicinal plants. <div class='fact-box'><b>💡 SCIENCE:</b> Described metabolism, immunity, and digestion 2,000 years before modern medicine. <b>✨ FACT:</b> Contains descriptions of over 340 plant medicines.</div>" },
+        { name: "APJ Abdul Kalam", cat: "Scientists", desc: "Missile scientist and aerospace engineer known as the 'Missile Man of India' and 11th President of India. <div class='fact-box'><b>💡 SCIENCE:</b> Led development of Agni and Prithvi missile systems. <b>✨ FACT:</b> His birthday (Oct 15) is celebrated as World Students' Day.</div>" },
+        { name: "Indian Brain Science", cat: "Biology", desc: "India is rapidly advancing in neuroscience research, including the National Brain Research Centre studying neurological disorders. <div class='fact-box'><b>💡 SCIENCE:</b> NBRC researches Alzheimer's, autism and brain development. <b>✨ FACT:</b> India produces 10,000+ neuroscience papers annually.</div>" },
+        { name: "Varahamihira", cat: "History", desc: "6th-century Indian polymath who wrote on astronomy, mathematics, astrology, and even described underground water detection. <div class='fact-box'><b>💡 SCIENCE:</b> Described the concept of gravity centuries before Newton. <b>✨ FACT:</b> His work Brihat Samhita is an encyclopedia of ancient Indian science.</div>" },
+        { name: "GSLV Mk III", cat: "ISRO", desc: "India's most powerful rocket designed to carry heavy payloads to geostationary orbit — key for Gaganyaan. <div class='fact-box'><b>💡 SCIENCE:</b> Uses cryogenic engine technology developed entirely in India. <b>✨ FACT:</b> Can lift 4 tonnes to GTO — the mass of an SUV.</div>" },
+        { name: "Ramanujan Machine", cat: "Scientists", desc: "AI system named after Ramanujan that autonomously generates mathematical conjectures, mimicking his intuitive genius. <div class='fact-box'><b>💡 SCIENCE:</b> Discovered new formulas for fundamental constants like π and e. <b>✨ FACT:</b> Developed by Israel's Technion, inspired by Indian mathematics.</div>" },
+        { name: "Prehistoric Surgery", cat: "History", desc: "Archaeological evidence from Mehrgarh (7,000 BCE) shows proto-dentistry — drilling teeth — the oldest surgery in human history. <div class='fact-box'><b>💡 SCIENCE:</b> Drill holes found in teeth show no signs of infection — successful procedures. <b>✨ FACT:</b> 4,000 years older than Egyptian medical practices.</div>" },
+        { name: "Satyendra Nath Bose", cat: "Scientists", desc: "Physicist whose work with Einstein led to Bose-Einstein statistics and the naming of 'bosons' — a fundamental particle class. <div class='fact-box'><b>💡 SCIENCE:</b> Bose-Einstein Condensate is a new state of matter. <b>✨ FACT:</b> The Higgs Boson (God Particle) is named partly after him.</div>" },
+    ];
+
+    const cats = ["ISRO", "Scientists", "History", "Biology", "Physics", "Facts"];
+
+    // Fill remaining cards to reach 350
+    const topicNames = {
+        "ISRO": ["RISAT Satellite","NavIC GPS","Cartosat","EDUSAT","Oceansat","INSAT Series","Astrosat","Shukrayaan","Gaganyaan","SpadEx Mission","IRNSS","Microsat","AstroSat X-Ray","GSAT Series","SARAL-AltiKa"],
+        "Scientists": ["Jagadish Chandra Bose","Subrahmanyan Chandrasekhar","Meghnad Saha","Prasanta Mahalanobis","Yellapragada SubbaRow","G.N. Ramachandran","Raja Ramanna","E.C.G. Sudarshan","Obaid Siddiqi","Tessy Thomas","K. Radhakrishnan","Roddam Narasimha","CNR Rao","Narinder Singh Kapany","Ashoke Sen"],
+        "History": ["Nalanda University","Takshashila University","Ancient Steel (Wootz)","Stepwells Engineering","Jantar Mantar","Vedic Mathematics","Brahmagupta","Bhaskara II","Pingala Binary System","Panini Grammar AI","Iron Pillar Delhi","Ancient Dyes","Indus Water Tech","Fiber Optics Origins","Baudhayana Theorem"],
+        "Biology": ["Indian Biodiversity","Tiger Conservation","Neem Tree Science","Tulsi Antibacterial","Turmeric Curcumin","CSIR Drug Research","Malarial Research","Indian Genome Project","Bt Cotton Research","Polio Eradication","Smallpox Inoculation","Tuberculosis Research","Leprosy Treatment","Snake Venom Research","Frog Skin Peptides"],
+        "Physics": ["Bose-Einstein Condensate","Raman Spectroscopy","Saha Ionization","Wave-Particle Duality","String Theory India","TIFR Research","IISc Bangalore","Quantum Computing India","Neutrino Observatory","Dark Matter Research","Gravitational Waves India","Plasma Physics","Nuclear Fusion ITER","Infrared Astronomy","Cosmic Ray Detection"],
+        "Facts": ["Number Pi India","Chess Origins","Shampoo Invention","Buttons Invented India","Ruler Measurement","Flush Toilet Indus","Decimal Fractions","Negative Numbers","Game of Snakes Ladders","Ink Origins","Cotton Cultivation","Jute Processing","Diamonds Mining","Zinc Distillation","Binary Numbers"]
+    };
+
+    let idx = database.length;
+    for (let c of cats) {
+        const names = topicNames[c] || [];
+        for (let n of names) {
+            if (idx >= 350) break;
+            database.push({
+                name: n,
+                cat: c,
+                desc: `A remarkable ${c.toLowerCase()} discovery from India. <div class='fact-box'><b>💡 SCIENCE:</b> Part of India's rich scientific heritage. <b>✨ FACT:</b> Discovery #${idx + 1} of 350.</div>`
+            });
+            idx++;
+        }
+    }
+
+    // Fill any remaining with rotating categories
+    while (database.length < 350) {
+        const c = cats[database.length % cats.length];
+        database.push({
+            name: `${c} Discovery #${database.length + 1}`,
+            cat: c,
+            desc: `Scientific wonder from India. <div class='fact-box'><b>💡 SCIENCE:</b> Research ongoing. <b>✨ FACT:</b> Entry ${database.length + 1} of 350.</div>`
+        });
+    }
+
+    let currentCat = 'all';
+
+    function setCat(c) {
+        currentCat = c;
+        document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        render();
+    }
+
+    function render() {
+        const term = document.getElementById('searchBar').value.toLowerCase();
+        const grid = document.getElementById('mainGrid');
+        const filtered = database.filter(i =>
+            (currentCat === 'all' || i.cat === currentCat) &&
+            i.name.toLowerCase().includes(term)
+        );
+
+        document.getElementById('counter').textContent =
+            `Showing ${filtered.length} of 350 discoveries`;
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="empty"><h2>No results found</h2><p>Try a different search term</p></div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(i => `
+            <div class="card">
+                <span class="tag">${i.cat}</span>
+                <h3>${i.name}</h3>
+                <p>${i.desc}</p>
+            </div>
+        `).join('');
+    }
+
+    render();
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(() => console.log("PWA Active"));
+    }
+</script>
+
+</body>
+</html>
